@@ -12,7 +12,7 @@ app.use(cors());
 app.use(morgan("dev"));
 app.use(helmet());
 
-app.get("/", routes);
+app.use("/", routes);
 
 app.get("/favicon.ico", (req, res) => res.status(204).end());
 
