@@ -12,11 +12,21 @@ router.use("/auth", authRouter);
 router.use(
   "/books",
   (req, res, next) => {
-    const isAuthenticated = true;
-    if (!isAuthenticated) {
-      return res.status(401).json({ message: "Unauthorized. Please Log in" });
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) {
+      return res
+        .status(401)
+        .json({ message: "Unauthorized. No token provided" });
     }
-    next();
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = decoded;
+      next();
+    } catch (error) {
+      return res
+        .status(401)
+        .json({ message: "Unauthorized. Invalid or expired token" });
+    }
   },
   bookRoute
 );

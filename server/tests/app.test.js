@@ -6,7 +6,7 @@ describe("API Endpoints", () => {
   it("should return a welcome message for the root endpoint", async () => {
     const res = await request(app).get("/");
     expect(res.statusCode).toEqual(200);
-    expect(res.text).toEqual("Welcome to the BookStore API!");
+    expect(res.text).toEqual("Welcome to the Bookstore");
   });
   //test get /favicon.ico
   it("should return 204 for favicon.ico", async () => {

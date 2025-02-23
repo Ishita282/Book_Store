@@ -26,10 +26,21 @@ exports.getBookById = async (req, res) => {
 exports.createBook = async (req, res) => {
   try {
     const { title, author, genre, price } = req.body;
-    const newBook = new Book({ title, author, genre, price });
-    await newBook.save();
-    res.status(201).json(newBook);
+    if (!title || !author || !genre || !price) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    if (typeof price !== "number" || price <= 0) {
+      return res
+        .status(400)
+        .json({ message: "Price must be a positive number" });
+    }
+
+    const newBook = new Book.create({ title, author, genre, price });
+
+    res.status(201).json({ message: "Book created success", book: newBook });
   } catch (error) {
+    console.error("Error in createBook", error.message);
     res.status(500).json({ message: "Error creating book", error });
   }
 };
