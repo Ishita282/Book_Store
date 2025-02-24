@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { loginUser } from "../api/authApi";
-import useAuth from "../hooks/useAuth";
 
 const login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
-  const { handleLogin } = useAuth();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -15,7 +13,8 @@ const login = () => {
     e.preventDefault();
     try {
       const data = await loginUser(formData);
-      handleLogin(data);
+      localStorage.setItem("token", data.token);
+      alert("Login successful!");
     } catch (error) {
       setError(error.response?.data?.message || "Something went wrong");
     }

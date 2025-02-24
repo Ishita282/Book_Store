@@ -12,7 +12,7 @@ export const loginUser = async (credentials) => {
 
 export const signupUser = async (userData) => {
   try {
-    const response = await api.post("/api/auth/signup", data);
+    const response = await api.post("/api/auth/signup", userData);
     return response.data;
   } catch (error) {
     console.log("Signup failed:", error.response?.data || error.message);
@@ -33,7 +33,16 @@ export const getUserProfile = async (token) => {
   }
 };
 
-export const logoutUser = () => {
-  //clear data or notify server
-  return { message: "Logged out successfully" };
+export const logoutUser = async () => {
+  try {
+    await api.post("/api/auth/logout");
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    return { message: "Logged out successfully" };
+  } catch (error) {
+    console.log("Logout failded:", error.response?.data || error.message);
+    throw error;
+  }
 };

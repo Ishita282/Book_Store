@@ -1,12 +1,6 @@
-import "react";
-import useAuth from "../hooks/useAuth";
+import React from "react";
 
 const dashboard = () => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { user } = useAuth();
-
-  if (!user) return <p>Please login to access the dashboard</p>;
-
   return (
     <div>
       <h2>Dashboard</h2>

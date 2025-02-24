@@ -1,4 +1,4 @@
-import "react";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
 import Login from "./pages/login";
@@ -6,17 +6,7 @@ import Signup from "./pages/signup";
 import Logout from "./pages/logout";
 import Profile from "./pages/profile";
 import Dashboard from "./pages/dashboard";
-import useAuth from "./hooks/useAuth";
-
-// eslint-disable-next-line react/prop-types
-const ProtectedRoute = ({ children }) => {
-  const { user } = useAuth();
-
-  if (!user) {
-    return <p>You need to log in to access this page.</p>;
-  }
-  return children;
-};
+import ProtectedRoute from "./components/protectedRoute";
 
 const App = () => {
   return (

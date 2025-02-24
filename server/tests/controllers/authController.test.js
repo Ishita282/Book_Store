@@ -1,5 +1,5 @@
 const {
-  registerUser,
+  signupUser,
   loginUser,
   //   logoutUser,
 } = require("../../src/controller/authController");
@@ -17,8 +17,8 @@ describe("Auth Controller", () => {
     jest.clearAllMocks();
   });
 
-  describe("registerUser", () => {
-    it("should register a new user successfully", async () => {
+  describe("signupUser", () => {
+    it("should signup a new user successfully", async () => {
       const req = {
         body: {
           name: "Test User",
@@ -41,7 +41,7 @@ describe("Auth Controller", () => {
       bcrypt.hash.mockResolvedValue("hashedPassword");
       jwt.sign.mockReturnValue("mockToken");
 
-      await registerUser(req, res);
+      await signupUser(req, res);
 
       expect(User.findOne).toHaveBeenCalledWith({ email: req.body.email });
       expect(User.create).toHaveBeenCalledWith({
@@ -53,13 +53,13 @@ describe("Auth Controller", () => {
       expect(res.status).toHaveBeenCalledWith(201);
       expect(res.json).toHaveBeenCalledWith({
         success: true,
-        message: "User registered successfully",
+        message: "User signuped successfully",
         user: { id: "user123", name: req.body.name, email: req.body.email },
         token: "mockToken",
       });
     });
 
-    it("should return 409 if the email is already registered", async () => {
+    it("should return 409 if the email is already signuped", async () => {
       const req = { body: { email: "test@example.com" } };
       const res = {
         status: jest.fn().mockReturnThis(),
@@ -67,7 +67,7 @@ describe("Auth Controller", () => {
       };
       User.findOne.mockResolvedValue({ email: "test@example.com" });
 
-      await registerUser(req, res);
+      await signupUser(req, res);
 
       expect(User.findOne).toHaveBeenCalledWith({ email: req.body.email });
       expect(res.status).toHaveBeenCalledWith(409);
