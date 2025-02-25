@@ -1,20 +1,23 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
-import Home from "./pages/home";
-import Login from "./pages/login";
-import Signup from "./pages/signup";
-import Logout from "./pages/logout";
-import Profile from "./pages/profile";
-import Dashboard from "./pages/dashboard";
-import ProtectedRoute from "./components/protectedRoute";
+import { BrowserRouter as Routes, Route } from "react-router-dom";
+// import Landing from "./pages/LandingPage";
+// import Home from "./pages/Home";
+import LandingPage from "./pages/LandingPage";
+// import Login from "./pages/Login";
+// import Signup from "./pages/Signup";
+// import Logout from "./pages/Logout";
+// import Profile from "./pages/Profile";
+// import Dashboard from "./pages/Dashboard";
+// import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   return (
     <>
       <div className="bg-gray-100 min-h-screen flex justify-center items-center">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<LandingPage />} />
+          {/* <Route path="/home" element={<Home />} /> */}
+          {/* <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/logout" element={<Logout />} />
           <Route
@@ -32,7 +35,7 @@ const App = () => {
                 <Dashboard />
               </ProtectedRoute>
             }
-          />
+          /> */}
         </Routes>
       </div>
     </>
