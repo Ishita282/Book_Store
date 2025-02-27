@@ -10,14 +10,23 @@ exports.getAllBooks = async (req, res) => {
   }
 };
 
-exports.getBookById = async (req, res) => {
+exports.getBookByName = async (req, res) => {
   try {
-    const { id } = req.params;
-    const book = await Book.findById(id);
-    if (!book) {
-      return res.status(404).json({ message: "Book not found" });
+    const { title } = req.query;
+
+    if (!title) {
+      return res.status(400).json({ message: "Search term is required" });
     }
-    res.status(200).json(book);
+
+    const books = await Book.find({
+      title: { $regex: title, $Options: "i" },
+    });
+
+    if (books.length === 0) {
+      return res.status(404).json({ message: "No books found" });
+    }
+
+    res.status(200).json(books);
   } catch (error) {
     res.status(500).json({ message: "Error fetching book", error });
   }
@@ -36,7 +45,7 @@ exports.createBook = async (req, res) => {
         .json({ message: "Price must be a positive number" });
     }
 
-    const newBook = new Book.create({ title, author, genre, price });
+    const newBook = await Book.create({ title, author, genre, price });
 
     res.status(201).json({ message: "Book created success", book: newBook });
   } catch (error) {
